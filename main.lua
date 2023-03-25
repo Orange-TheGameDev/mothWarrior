@@ -1,7 +1,7 @@
 --      RPG PROJECT IN LOVE2D
 
 -- debug mode
-debug = true    -- SET FALSE BEFORE SHIPPING
+debug = false    -- SET FALSE BEFORE SHIPPING
 
 --      ROOM CHART:
 -- 0 - Title
@@ -17,10 +17,10 @@ Room = 0
 
 function love.load(dt)
     
-    onShop = false
-    
     y_pressed = false
     n_pressed = false
+    
+    bonk = require 'Libraries.bonk.bonk'
     
     player = require 'Scripts/player'
     playerLoad()
@@ -41,6 +41,8 @@ function love.load(dt)
     love.window.setMode(800, 600)
     
     shop = {x = 650, y = 450, img = shopImg}
+    
+    createCollisionBox(shop, 128, 128)
     
 end
 
@@ -65,13 +67,18 @@ function love.draw(dt)
    
     if debug == true then
         love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+        
+        for i, b in ipairs(boxes) do
+            love.graphics.rectangle('fill', b.x, b.y, b.w, b.h)
+        end
+        
     end
     
 end
 
 function love.update(dt)
     
-    onShop = false
+    bonkUpdate()
     
     if Room == 0 then
         if love.keyboard.isDown('space') then
@@ -84,12 +91,7 @@ function love.update(dt)
         playerUpdate(dt)
         arrowUpdate(dt)
         
-        if oPlayer.x > shop.x and oPlayer.x < shop.x + 128 and oPlayer.y > shop.y and oPlayer.y < shop.y + 128 then
-            onShop = true
-        end
-        
     end
-    
     
 end
 
@@ -108,9 +110,11 @@ function love.keypressed(key, scancode, isrepeat)
         end
         
     elseif Room == 1 then
-        if key == 'space' and onShop == true then
-            dialogComplete = false
-            Room = 2
+        if key == 'space' then
+            if checkOverlap(oPlayer.bbox, shop.bbox) then
+                dialogComplete = false
+                Room = 2
+            end
         end
         
         if key == 'e' then

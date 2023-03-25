@@ -3,6 +3,8 @@ oPlayer = {x = 50, y = 50, width = 32, height = 32, speed = 3, state = 0, img = 
 
 playerTimer = nil
 
+createCollisionBox(oPlayer, 32, 32)
+
 function playerLoad()
     
     playerRight = love.graphics.newImage('Assets/playerRight.png')
