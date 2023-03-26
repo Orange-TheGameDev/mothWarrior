@@ -1,7 +1,7 @@
 --      RPG PROJECT IN LOVE2D
 
 -- debug mode
-debug = false    -- SET FALSE BEFORE SHIPPING
+debug = false  -- MAKE SURE IT'S FALSE BEFORE SHIPPING
 
 --      ROOM CHART:
 -- 0 - Title
@@ -69,7 +69,7 @@ function love.draw(dt)
         love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
         
         for i, b in ipairs(boxes) do
-            love.graphics.rectangle('fill', b.x, b.y, b.w, b.h)
+            love.graphics.rectangle('line', b.x, b.y, b.w, b.h)
         end
         
     end
@@ -135,9 +135,8 @@ function love.keypressed(key, scancode, isrepeat)
         end
     end
     
-    if key == 't' then      -- REMOVE THIS
+    if key == 't' then      -- REMOVE THIS BEFORE SHIPPING
         debug = not debug
     end
     
 end
-
