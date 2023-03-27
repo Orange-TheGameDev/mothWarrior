@@ -19,6 +19,17 @@ function checkOverlap(box1, box2)
     
 end
 
+function advancedOverlap(x1, x2, y1, y2, w1, w2, h1, h2)
+    if x1 < x2 + w2 and
+    x1 + w1 > x2 and
+    y1 < y2 + h2 and
+    h1 + y1 > y2 then
+        return true
+    end
+    
+    return false
+end
+
 function bonkUpdate()
     for i, b in ipairs(boxes) do
         b.x = b.object.x
